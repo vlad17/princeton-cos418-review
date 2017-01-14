@@ -37,3 +37,19 @@ It contains in-depth descriptions of the content described above.
 
 The various nuances described here are only to help understanding of the topic.
 ```
+
+## What's not done yet:
+
+bayou
+dynamo
+spanner
+franklin
+sporc
+bft
+raft
+paxos
+chord
+transactions
+spark
+everything after winter break
+
