@@ -17,7 +17,8 @@ Work flow:
 Notes:
 
 * Master SPOF
-* Pre-emptive re-launch of tasks when slow or non-responsive. This is what requires blocked execution mentioned above for correctness. Similarly, the atomic rename is necessary for handling redundant reducers.
-* `O(MR)` state on master.
-* Output stored in `R` separate files.
-
+* Pre-emptive re-launch of tasks when slow or non-responsive. This is what requires blocked execution mentioned above for correctness. Similarly, the atomic rename is necessary for handling redundant reducers
+* `O(MR)` state on master
+* Output stored in `R` separate files
+* Partial aggregation possible with combiner phase
+* Stragglers (slow nodes or nodes with a lot of work to do) lengthen execution duration
