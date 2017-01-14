@@ -6,7 +6,7 @@
 
 _Image source_: MapReduce: Simplified Data Processing on Large Clusters, Dean and Ghemawat 2004.
 
-Work flow:
+## MR algorithm
 
 0. Input split into `M` pieces
 0. Assign `M` map tasks
@@ -16,7 +16,7 @@ Work flow:
 0. Reducers apply their reduce function, output is stored to temp file.
 0. The master is notified when a reducer is done by an atomic rename to a fixed file name.
 
-Notes:
+## Notes
 
 * Master SPOF
 * Pre-emptive re-launch of tasks when slow or non-responsive. This is what requires blocked execution mentioned above for correctness. Similarly, the atomic rename is necessary for handling redundant reducers
