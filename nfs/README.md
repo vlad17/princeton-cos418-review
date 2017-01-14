@@ -8,17 +8,17 @@ NFSv2
 
 * Read-ahead
 * Write-through
-* File handles store all per-client state (inode number, generation) -> server is stateless in that it only needs to manage per-file state (i.e., multiple generations).
+* File handles store all per-client state (inode number, generation) -> server is **stateless** in that it only needs to manage per-file state (i.e., multiple generations).
 
 NFSv3
 
-* Write-behind (wait until `close/fsync` to issue changes). Coarsifies consistency to session-level.
+* Write-behind (wait until `close/fsync` to issue changes). Coarsifies consistency to **session**-level.
 * Read cache consistency verified by client maintaining `last_validation` time. If `current_time - last_validation < threshold`, clocks are consistent, and writes wait longer than `threshold` to take effect, can read from cache.
-* Challenge: session-concurrent writers change each other's offsets. Resolution: stateful server invalidates previous writer upon changes by new one.
+* Challenge: session-concurrent writers change each other's offsets. Resolution: **stateful** server invalidates previous writer upon changes by new one.
 
 NFSv4
 
-* Use leases (with clock-skew padding, they are basically time-bounded locks given to clients) to avoid client failure to unlock.
+* Use **leases** (with clock-skew padding, they are basically time-bounded locks given to clients) to avoid client failure to unlock.
 * Write leases are exclusive, read leases can overlap.
 
 

@@ -23,4 +23,4 @@ Notes:
 * `O(MR)` state on master
 * Output stored in `R` separate files
 * Partial aggregation possible with combiner phase
-* Stragglers (slow nodes or nodes with a lot of work to do) lengthen execution duration
+* **Stragglers** (slow nodes or nodes with a lot of work to do) lengthen execution duration
