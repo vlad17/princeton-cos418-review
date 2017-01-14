@@ -12,7 +12,8 @@ Click on the unit you want to review. Read.
 
 0. Fork this repo
 0. Create a folder for the unit you want to add (follow the others as an example).
-0. Add a single file in that folder, `README.md`, following the same format as the others. In particular, it should look like this:
+0. Add a single file in that folder, `README.md`, following the same format as the others. In particular, it should look like the excerpt below.
+0. Create a pull request, I'll merge it in.
 
     # Summary
 
