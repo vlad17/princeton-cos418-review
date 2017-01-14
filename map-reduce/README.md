@@ -2,7 +2,7 @@
 
 **MapReduce** is a framework that offers an abstraction for large-scale computation by managing the scheduling, distribution, parallelism, partitioning, communication, and reliability. This is done by requiring applications to adhere to a template for execution.
 
-![map reduce image](/unit-0-map-reduce/mapreduce-exec.png)
+![map reduce image](/map-reduce/mapreduce-exec.png)
 
 Work flow:
 
