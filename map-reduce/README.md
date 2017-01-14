@@ -4,6 +4,8 @@
 
 ![map reduce image](/map-reduce/mapreduce-exec.png)
 
+_Image source_: MapReduce: Simplified Data Processing on Large Clusters, Dean and Ghemawat 2004.
+
 Work flow:
 
 0. Input split into `M` pieces

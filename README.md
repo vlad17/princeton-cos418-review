@@ -2,7 +2,7 @@
 
 This is a public study guide for Princeton University's Distributed Systems class.
 
-The [syllabus](https://www.cs.princeton.edu/courses/archive/fall16/cos418/syllabus.html) describes what was covered.
+The [syllabus](https://www.cs.princeton.edu/courses/archive/fall16/cos418/syllabus.html) describes what was covered, extracts from those presentations are used here throughout.
 
 ## Instructions for Use
 
