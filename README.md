@@ -31,5 +31,9 @@ Other requirements:
 
 # Detailed Explanation
 
-This section is optional. It contains in-depth descriptions of the content described above. The various nuances described here are only to help understanding of the topic.
+This section is optional. 
+
+It contains in-depth descriptions of the content described above. 
+
+The various nuances described here are only to help understanding of the topic.
 ```
