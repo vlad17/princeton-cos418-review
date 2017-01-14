@@ -25,32 +25,20 @@ Algorithms for strong consistency (and additional assumptions):
 * Raft - same as Paxos but random timers part of algorithm
 * Practical BFT - **Byzantine** server and client failures, unreliable+async network, valid if `>2/3` of servers work.
 
-### Paxos (TODO: summary here, move to own folder)
-
-**Multi-Paxos**
-
-### Raft (TODO: summary here, move to own folder)
-
-### Practical BFT (TODO: summary here, move to own folder)
-
 ## Sequential Consistency
 
 ## Causal Consistency
 
-### COPS (TODO: summary here, move to own folder)
+COPS (just summarize)
 
 ## Eventual Consistency
 
 CAP Theorem
 
+TODO
+
 ### Implementations
 
-#### Bayou (TODO: summary here, move to own folder)
+Bayou (just summarize)
 
-#### Dynamo (TODO: summary here, move to own folder)
-
-## Other Distributed State Implementations
-
-No exact guarnatees offered; only probibalistic.
-
-### Chord (TODO: summary here, move to own folder)
+Dynamo (just summarize)

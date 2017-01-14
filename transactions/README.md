@@ -8,8 +8,8 @@
 
 ## MVCC
 
-### Franklin (TODO: summary here, move to own folder)
+Franklin (just summarize + add own folder)
 
-### Spanner (TODO: summary here, move to own folder)
+Spanner (just summarize + add own folder)
 
-### SPORC (TODO: summary here, move to own folder)
+SPORC (just summarize + add own folder)
