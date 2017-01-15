@@ -14,16 +14,19 @@ A system is strongly consistent if for any realization, at any given time along 
 
 _Equivalent characterization_: every operation is given a unique time stamp, offering a global ordering for all operations, across all peers.
 
-Also called **linearizability**
+Also called **linearizability**.
 
 **FLP Theorem**: Even if system state is just one bit and we have a reliable network, for any deterministic algorithm reliant on asynchronous communication it is possible that no consensus will be reached (i.e., a single operation wouldn't ever be visible).
 
+Strong consistency algorithms guarantee **safety** and **liveness**. Safety requires read/write quoroms (`R, W`) to always intersect, which is guaranteed to happend if `|R| + |W| > N`. Let majority be `M = floor(N / 2) + 1)`
+
 Algorithms for strong consistency (and additional assumptions):
 
-* Multicast - no failure, reliable+synchronous network
-* Paxos - random timers else livelocks, **fail/stop**, unreliable+async network (progress if majority working)
-* Raft - same as Paxos but random timers part of algorithm
-* Practical BFT - **Byzantine** server and client failures, unreliable+async network, valid if `>2/3` of servers work.
+* Multicast - no failure, reliable+synchronous network. `|R| = |W| = N`
+* 2PC - depends on extensions. `|R| = 1, |W| = N`
+* Paxos - random timers else livelocks, **fail/stop**, unreliable+async network (progress if majority working). For multi-Paxos, `|R| = |W| = M`
+* Raft - same as Paxos but random timers part of algorithm. `|R| = |W| = M`
+* Practical BFT - **Byzantine** server and client failures, unreliable+async network, valid if `>2/3` of servers work. `|R| = |W| = floor(2/3 * N) + 1`
 
 ## Sequential Consistency
 
