@@ -17,8 +17,6 @@ This allows us to implement **Write-Ahead Logging** (WAL):
 ### Concurrency Control
 **Schedule** for transactions is an ordering of the operations performed by those transaction. We want to find two equivalent schedules, i.e. they order all **conflicting** operations in the same way.
 
-## 2PL
-
 ## Locking Transactions
 
 ## OCC

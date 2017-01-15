@@ -9,27 +9,29 @@ Phase 1
 Proposer (stores proposal counter `p`, has value `v` to offer, own `id`)
 
 0. Increment `p`
-0. Send `prepare(p, id, v)`
+0. Send `Prepare(p, v)`
 
 Acceptor (stores `n`, highest accepted proposal, `(na, va)` accepted round number and value)
 
-0. Receive `prepare(p, prep-id, v)`
-0. if `(p, prep-id) > n`, set `n = (p, prep-id)`. If `(na, va)` undefined, set to `(n, v)`. Reply `promise(p, na, va)` back to `prep-id`.
+0. Receive `Prepare(p, v)` from proposer `prep-id`
+0. if `(p, prep-id) > n`, set `n = (p, prep-id)`. If `(na, va)` undefined, set to `(n, v)`. Reply `Promise(p, na, va)` back to `prep-id`.
 0. else, if `p <= n`, reply `prepare-fail` to `prep-id`
 
 Phase 2
 
-Proposer, upon receiving `promise(p, ..., ...)` from majority of acceptors:
+Proposer, upon receiving `Promise(p, ..., ...)` from majority of acceptors:
 
-0. Choose value `va` with highest `na` from all `promise(p, n, v)` received
-0. Send `accept(p, id, va)`
+0. Choose value `va` with highest `na` from all `Promise(p, n, v)` received
+0. Send `Accept!(p, va)` to all acceptors
 
 Acceptor
 
-0. Receive `accept(p, prep-id, v)`
-0. If `(p, prep-id) > n`, set `na = n = (p, prep-id`) and `va = v`. Then notify learners.
+0. Receive `Accept!(p, v)` from `prep-id`.
+0. If `(p, prep-id) > n`, set `na = n = (p, prep-id)` and `va = v`. Then notify learners.
 
-If a learner ever receives a quorum of accepted values, it makes the decision to accept that value for consensus.
+(Phase 3) If a learner ever receives a quorum of accepted values, it makes the decision to accept that value for consensus.
+
+Quorum for basic paxos is majority of `N` nodes, `floor(N/2) + 1`
 
 ### Paxos safety
 
@@ -45,7 +47,20 @@ In case of a leader being partitioned, the re-elected leader may coincide with t
 
 ## Detailed Explanation
 
-[Wikipedia page with examples](https://en.wikipedia.org/wiki/Paxos_%28computer_science%29#Basic_Paxos)
+Examples from [Wikipedia page](https://en.wikipedia.org/wiki/Paxos_%28computer_science%29#Basic_Paxos).
+
+Clean run:
+```
+Client   Proposer      Acceptor     Learner
+   |         |          |  |  |       |  |
+   X-------->|          |  |  |       |  |  Request
+   |         X--------->|->|->|       |  |  Prepare(1, v)
+   |         |<---------X--X--X       |  |  Promise(1, v) x3
+   |         X--------->|->|->|       |  |  Accept!(1, v)
+   |         |<---------X--X--X------>|->|  Accepted(1, v)
+   |<---------------------------------X--X  Response
+   |         |          |  |  |       |  |
+```
 
 Livelock without random timeouts:
 
