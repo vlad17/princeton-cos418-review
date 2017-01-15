@@ -40,6 +40,7 @@ The various nuances described here are only to help understanding of the topic.
 
 ## What's not done yet:
 
+2pc
 bayou
 dynamo
 spanner
@@ -50,5 +51,6 @@ raft
 chord
 transactions
 spark
+paxos failure examples
 everything after winter break
 

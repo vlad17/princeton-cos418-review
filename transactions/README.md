@@ -1,7 +1,5 @@
 # Summary 
 
-## 2PC
-
 ## Locking Transactions
 
 ## OCC
