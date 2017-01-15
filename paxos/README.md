@@ -43,7 +43,7 @@ Have a leader-election round (like in raft): once elected, a leader makes `accep
 
 A leader has a term, given by the lease recognized during the election. During the lease, followers (acceptors) will accept a current leader.
 
-In case of a leader being partitioned, the re-elected leader may coincide with the old one (who still thinks it's his term). The re-elected leader waits until the lease ends before beginning `accept` proposals: **split-brain** can occur.
+In case of a leader being partitioned, the re-elected leader may coincide with the old one (who still thinks it's his term). The re-elected leader waits until the lease ends before beginning `accept` proposals: **split-brain** can occur. However, there can only be at most one leader with an active leader lease.
 
 ## Detailed Explanation
 
