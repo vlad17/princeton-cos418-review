@@ -99,5 +99,3 @@ The key to reading the serializability figures.
 While serializability is a guarantee about transactions over one or more objects, linearizability is a guarantee about **single** operations on **single** objects.
 
 2PL is pessimistic (get all locks first), while OCC is optimistic, but then we recheck all read + written items before commit. *We choose OCC in an environment with low data contention, and 2PL when data contention is high.*
-
-
