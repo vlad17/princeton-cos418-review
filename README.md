@@ -15,6 +15,7 @@ Useful markdown [cheat sheet](https://github.com/adam-p/markdown-here/wiki/Markd
 0. Fork this repo
 0. Create a folder for the unit you want to add (follow the others as an example - use hyphens for spaces and all lowercase).
 0. Add a single file in that folder, `README.md`, following the same format as the others. In particular, it should look like the excerpt below. Auxiliary materials are welcome in that unit's folder.
+0. To preview your changes (before adding them), use [grip](https://github.com/joeyespo/grip).
 0. Create a pull request, I'll merge it in.
 
 ```markdown
