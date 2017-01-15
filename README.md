@@ -42,6 +42,7 @@ The various nuances described here are only to help understanding of the topic.
 ## What's not done yet:
 
 primary-backup
+rpc
 2pc
 bayou
 dynamo
