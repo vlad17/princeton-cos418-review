@@ -47,7 +47,6 @@ franklin
 sporc
 bft
 raft
-paxos
 chord
 transactions
 spark
