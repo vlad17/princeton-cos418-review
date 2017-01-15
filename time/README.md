@@ -52,5 +52,9 @@ List of all counters at server `k` is the vector time, `V(k)`. Let `V(a) <= V(b)
 
 Note the operator `<=` induces the operators `=, <`.
 
-Vector clocks capture **causality**. If an event at time `v1` causes another at time `v2`, possible at different servers, then `v1 < v2`. If no relation (even `<=`) holds between `v1, v2`, then they are concurrent.
+Vector clocks capture **causality**. If and only if an event at time `v1` could be causally related to another at time `v2` (there is a chain of events from on to the other), possible at different servers, then `v1 < v2`. If no relation (even `<=`) holds between `v1, v2`, then they are concurrent.
+
+## Detailed Explanation
+
+Note that vector clocks hold with inequality iff events can be causally related. This enables systems, such as Dynamo, to infer (if neither `V(a) < V(b)` nor `V(b) < V(a)` hold) that two events are concurrent (and their peers have not yet interacted). This is useful for determining if someone has received someone else's updates or not.
 
