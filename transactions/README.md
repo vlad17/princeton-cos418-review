@@ -22,7 +22,7 @@ This allows us to implement **Write-Ahead Logging** (WAL):
 
 **Conflict Serializable**: when a schedule is equivalent to **some** serial schedule
 
-But how do we test for serializability? We create a **precedence graph**, where each node **t** represents a transaction **t**, and there is an edge from **s** to **t** if some action **s** precedes and conflicts with some action of **t**. Then, a schedule is **conflict-serializable** if and only if its precedence graph is **acyclic.** 
+But how do we test for serializability? We create a **precedence graph**, where each node ``t`` represents a transaction ``t``, and there is an edge from ``s`` to ``t`` if some action ``s`` precedes and conflicts with some action of ``t``. Then, a schedule is **conflict-serializable** if and only if its precedence graph is **acyclic.** 
 
 ![serial schedule image](/transactions/acyclic_graph.png)  
 This schedule is conflict-serializable because there is an edge from transfer to sum, but not from sum to transfer.
@@ -44,6 +44,7 @@ Once a transaction has **released** a lock it is **not allowed to obtain** any o
 ![serial schedule image](/transactions/2pl_example.png)  
 
 ### Issues:
+
 * While 2-PL precludes non-serializable schedules, it also precludes some serializable schedules (not an exact one-to-one mapping).
 * Deadlock is possible - but can detect deadlock cycles and abort.
 * **Phantom Problem**: database is more complex than key-value storage, such that locking individual data items does not ensure serializability
