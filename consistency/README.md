@@ -39,6 +39,12 @@ Any two writes that _could_ be causally related are properly sequenced. If every
 
 Eventual systems: AP, with updates guarnateed to propogate in finite time, if no new changes.
 
+## Chain Replication
+
+![chain replication image](/consistency/chain.png)
+
+In read-heavy workloads, reads can be answered at the replicas in the middle. If a write is being propogated down the chain, then the requested key can be dirty, in which case the exact tail version is requested.
+
 # Detailed Explanation
 
 ## Sequential but not Strong
