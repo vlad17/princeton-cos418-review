@@ -55,15 +55,23 @@ chord
 
 paxos failure examples
 
-dynamo
+cops
 
-bayou
+dynamo
 
 spanner
 
 sporc
 
-transactions
+transactions: 2PL Permits Interleaved Access
+
+transactions: 2PL Doesn't Exploit Full Concurrency
+
+transactions: Undisciplined Locking causes Non-serializable Schedules
+
+transactions: ARIES Data Structures
+
+transactions: ARIES Crash Recovery Trace
 
 blockchain
 
