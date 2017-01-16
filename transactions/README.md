@@ -76,14 +76,6 @@ Introduced in **ARIES**: the gold standard in IBM DB2 and Microsoft's SQL Server
 ### Validate Phase
 During the validation phase the system must ensure that there is *no conflicting concurrency*. 
 
-#### Details
-Consider a transaction `X`. For all other transactions `Y`, which are either committed or in validation phase, if all of the following fail, then validation fails and abort `X`.
-
-* `Y` completes commit before `X` starts modify
-* `X` starts commit after `Y` completes commit, and ReadSet of `X` and WriteSet of `Y` are disjoint  
-* Both ReadSet `X` and WriteSet `X` are disjoint from WriteSet `Y`, and `Y` completes modify phase
-
-
 ### Comparison to 2PL
 
 2PL is pessimistic (get all locks first), while OCC is optimistic, but then we recheck all read + written items before commit. *We choose OCC in an environment with low data contention, and 2PL when data contention is high.*
@@ -96,7 +88,6 @@ Consider a transaction `X`. For all other transactions `Y`, which are either com
 * Essentially all reads execute in one *snapshot*, and all writes execute as one *snapshot*  
 * Yields snapshot isolation, which is weaker than serializability  
 * Run garbage collection to clean up  
-* See black/white marble example if unclear
 
 ### Details
 Every object `O` has both read and write timestamps.  
@@ -110,6 +101,18 @@ When executing a transaction `T`:
 Examples in lecture slides but have many typos.
 
 # Detailed Explanation
+
+## OCC Validation
+
+Consider a transaction `X`. For all other transactions that whose modify period intersected with `X`'s, one of the following must hold. Let the other transaction be `Y`.
+
+* `Y` completes commit before `X` starts modify
+* `X` starts commit after `Y` completes commit, and ReadSet of `X` and WriteSet of `Y` are disjoint  
+* Both ReadSet `X` and WriteSet `X` are disjoint from WriteSet `Y`, and `Y` completes modify phase
+
+If all of the above fail for any single transaction `Y`, then validation fails and abort `X`.
+
+We can use notions of "before" and "after" by assuming we have some access to "real time" or an atomic counter.
 
 ## Useful Equations
 
@@ -158,3 +161,7 @@ TODO: Summarize L15 slides 43-46
 ## ARIES Crash Recovery Trace
 
 TODO: Summarize (preferably with ASCII art) L15 slides 47-50
+
+## Black/White Marble Example
+
+TODO: Snapshot isolation but not Serializable example (preferably with ASCII art) L16 slide 14
