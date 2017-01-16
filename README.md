@@ -49,7 +49,6 @@ dynamo
 spanner
 franklin
 sporc
-bft
 raft
 chord
 transactions
