@@ -42,17 +42,37 @@ The various nuances described here are only to help understanding of the topic.
 ## What's not done yet:
 
 primary-backup
-rpc
-2pc
-bayou
-dynamo
-spanner
-franklin
-sporc
-raft
-chord
-transactions
-spark
-paxos failure examples
-everything after winter break
 
+spark
+
+rpc
+
+2pc
+
+raft
+
+chord
+
+paxos failure examples
+
+dynamo
+
+bayou
+
+spanner
+
+sporc
+
+transactions
+
+blockchain
+
+graph processing
+
+CDN
+
+roofnet
+
+cluster scheduling
+
+stream scheduling
