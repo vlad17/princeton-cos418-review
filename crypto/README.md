@@ -22,6 +22,3 @@ Use a hash function to point to data. There are various applications, such as in
 Creates a "tamper-evident" log of data, because if any of the data changes, all the subsequent hash points change (otherwise a hash collision is found, which has very low probability).
   
 ![serial schedule image](/crypto/hash_chain.png)
-
-
-TODO: Consider adding this in another unit (such as block chains). This is in the conflict resolution lecture.
