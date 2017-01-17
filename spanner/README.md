@@ -52,6 +52,8 @@ Condition 4.1.3 below is making sure that the read timestamp is less than or equ
 
 ![spanner transaction table](/spanner/spanner-ro.png)
 
+Image from _Spanner: Google's Globally-Distributed Database_ by Corbett et al 2012.
+
 Note transaction reads may require `t_safe` to advance sufficiently, especially for cross-tablet reads.
 
 As long as the assigned time is at least the maximum of all involved tablet groups' latest true commit time, the read will be externally consistent (thanks, true time!). However, it's faster to just use `TT.now().latest`, which guarantees this property rather than checking with multiple Paxos leaders.
