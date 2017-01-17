@@ -61,18 +61,33 @@ The greatest disadvantage of the two-phase commit protocol is that it is a block
 ## Failure Examples
 Just copy the pictures on the slides? Unnecessary work to copy it onto ASCII art.
 
-TODO: Participant fails before sending response
+### Participant fails before sending response
 
-TODO: Participant fails after sending vote
+![err1](/2pc/participant-fails-before-resp.png)
 
-TODO: Participant's vote was lost during transmission
+### Participant fails after sending vote
 
-TODO: Coordinator fails before sending prepare
+![err1](/2pc/partvote.png)
 
-TODO: Coordinator fails after sending prepare
+### Participant's vote was lost during transmission
 
-TODO: Coordinator fails after receiving votes
+![err1](/2pc/part-fail.png)
 
-TODO: Coordinator fails after sending decision
+### Coordinator fails before sending prepare
 
-TODO: Blocking if coordinator fails
+![e](/2pc/COORD-before.png)
+
+### Coordinator fails after sending prepare
+
+![e](/2pc/coord-prep.png)
+
+### Coordinator fails after receiving votes
+
+![e](/2pc/after-prep.png)
+
+### Coordinator fails after sending decision
+
+![e](/2pc/after-votes.png)
+
+
+
