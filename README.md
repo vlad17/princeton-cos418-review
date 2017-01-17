@@ -73,8 +73,6 @@ transactions: ARIES Crash Recovery Trace
 
 transactions: Black/White Marble Example
 
-spanner
-
 blockchain
 
 graph processing
