@@ -1,7 +1,6 @@
 # Summary
 
-**SPORC** allows for group Collaboration using Untrusted Cloud Resources. It allows real-time/concurrent collaboration (editing of shared data) and offline work (disconnected operation), and is used with untrusted servers that cannot read user data and cannot tamper without risking detection. SPORC illustrates the complementary
-benefits of operational transformation (OT) and fork* consistency.
+**SPORC** allows for group Collaboration using Untrusted Cloud Resources. It allows real-time/concurrent collaboration (editing of shared data) and offline work (disconnected operation), and is used with untrusted servers that cannot read user data and cannot tamper without risking detection. SPORC illustrates the complementary benefits of operational transformation (OT) and fork* consistency.
 
 See conflict_resolution for details on operational transform.
 
