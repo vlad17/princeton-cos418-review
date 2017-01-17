@@ -73,7 +73,9 @@ transactions: ARIES Crash Recovery Trace
 
 transactions: Black/White Marble Example
 
-blockchain
+crypto
+
+bitcoin (inc. blockchain)
 
 graph processing
 
