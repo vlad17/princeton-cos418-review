@@ -8,7 +8,7 @@ Two-Phase Commit is an atomic commit protocol with a goal of distributed agreeme
 (2) If one person aborts, *no one* commits.
   
 **Liveness**:  
-(1) If there are no failures and A and B can commit, then the action should commit.  
+(1) If there are no failures and all (arbitrary number) replices can commit, then the action should commit.  
 (2) If there are failures, reach a conclusion as soon as possible.
 
 ## Commit Request Phase
@@ -59,6 +59,8 @@ A, B = Servers
 The greatest disadvantage of the two-phase commit protocol is that it is a blocking protocol. If the coordinator fails permanently, some servers will never resolve their transactions: After a server has sent an agreement message to the coordinator, it will block until a commit or rollback is received.
 
 ## Failure Examples
+Just copy the pictures on the slides? Unnecessary work to copy it onto ASCII art.
+
 TODO: Participant fails before sending response
 
 TODO: Participant fails after sending vote
