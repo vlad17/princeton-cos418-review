@@ -39,12 +39,11 @@ Now, we need to **ensure** the serializable schedule. This is done with **locks*
 
 Essentially, we **allow concurrent** transactions, but add locks/lock manager.
 ### Lock Types
-**Shared**: Need to have before reading object  
-**Exclusive**: Need to have before writing to an object  
+**Shared**: Need to have before reading object. A shared lock can be issued to multiple transactions, but will not be issued if an exclusive lock is already issued to *another* transaction on this object.  
+**Exclusive**: Need to have before writing to an object. An exclusive lock can only be issued to one transaction, and will not be issued if another lock is already issued to *another* transaction on this object.
 
 ## 2-Phase Locking
-Once a transaction has **released** a lock it is **not allowed to obtain** any other locks. Therefore, there are two phases, a **growing phase** when transactions acquire locks, and a **shrinking phase** when transactions release locks. This ensures serializability!  
-![serial schedule image](/transactions/2pl_example.png)  
+Once a transaction has **released** a lock it is **not allowed to obtain** any other locks. Therefore, there are two phases, a **growing phase** when transactions acquire locks, and a **shrinking phase** when transactions release locks. This ensures serializability!  See examples for more details.
 
 ### Issues:  
 
@@ -86,7 +85,7 @@ During the validation phase the system must ensure that there is *no conflicting
 * Allocate the correct version to reads  
 * Unlike 2PL/OCC, reads never get rejected  
 * Essentially all reads execute in one *snapshot*, and all writes execute as one *snapshot*  
-* Yields snapshot isolation, which is weaker than serializability  
+* Yields **snapshot isolation**, which is *weaker* than serializability
 * Run garbage collection to clean up  
 
 ### Details
@@ -142,17 +141,96 @@ This schedule is conflict-serializable because there is an edge from transfer to
 
 ![serial schedule image](/transactions/cyclic.png)  
 
-## 2PL Permits Interleaved Access
+## 2 PL Only Allows Serializable Schedules
+The below example is precluded because Sum cannot grab the S-lock on B after it has released the S-lock on A.
 
-TODO: Summarize (preferably with ASCII art) L15 slides 37
+![serial schedule image](/transactions/2pl_example.png)  
+
+## 2PL Permits Interleaved Access
+Key rule is that once a transaction has released a lock, it is not allowed to obtain any other locks. Progression of time goes downward in the chart.
+
+```
+Transfer Transaction			Sum Transaction
+								ACQ S-Lock on A
+								Read A = 1
+ACQ S-Lock on A
+Read A = 1
+								ACQ S-Lock on B
+								Read B = 1
+								Release Locks
+								Commit (2)
+ACQ X-Lock on A
+Write A = 2
+ACQ S-Lock on B
+Read B = 1
+ACQ X-Lock on B
+Write B = 2
+Release Locks
+Commit
+```
+
+The following schedule could also have occurred, but in this case Sum appears to have occurred AFTER the transaction.
+
+```
+Transfer Transaction			Sum Transaction
+ACQ S-Lock on A
+Read A = 1					
+ACQ X-Lock on A
+Write A = 2
+ACQ S-Lock on B
+Read B = 1
+ACQ X-Lock on B
+Write B = 2
+Release Locks																	ACQ S-Lock on A
+								Read A = 2
+								ACQ S-Lock on B
+								Read B = 2
+								Release Locks
+								Commit (4)
+Commit
+```
 
 ## 2PL Doesn't Exploit Full Concurrency
+However, as noted before, 2PL precludes some serializable schedules. Events in parentheses are not allowed under 2PL, but must happen in order for this schedule to occur.
 
-TODO: Summarize (preferably with ASCII art) L15 slides 38
+```
+Transfer Transaction			Sum Transaction
+ACQ S-Lock on A
+Read A = 1
+ACQ X-Lock on A						
+Write A = 2
+								(ACQ S-Lock on A)
+								Read A = 2
+ACQ S-Lock on B
+Read B = 1
+ACQ X-Lock on B
+Write B = 2
+Release Locks	
+Commit
+								(ACQ S-Lock on A)
+								Read B = 2
+								Commit (4)
+```
 
 ## Undisciplined Locking causes Non-serializable Schedules
 
-TODO: Give example (preferably with ASCII art) of the above, and how it would be detected.
+(1) T1 locks all pages containing volleyball players that
+play setter, and finds tallest setter (height = 6').
+	
+(2) T2 inserts a new player that is a setter, (height = 6' 1")
+
+(3) T2 also deletes tallest outside hitter (with height 6' 5"), and commits.
+
+(4) T1 now locks all pages containing volleyball players that play outside hitter and finds tallest (with height 6' 4").
+
+T1 finds the tallest setter is 6', and the tallest outside is 6' 4". However, there is no serial execution where T1’s result could happen!
+
+### Valid Serializable Results
+
+```
+(1) T1: Tallest Setter: 6', Tallest Outside: 6' 5"
+(2) T1: Tallest Setter: 6' 1", Tallest Outside: 6' 4"
+```
 
 ## ARIES Data Structures
 
@@ -163,5 +241,32 @@ TODO: Summarize L15 slides 43-46
 TODO: Summarize (preferably with ASCII art) L15 slides 47-50
 
 ## Black/White Marble Example
+Let's say we have a bag of marbles, half of which are white, and half of which are black.
 
-TODO: Snapshot isolation but not Serializable example (preferably with ASCII art) L16 slide 14
+There are two transactions:  
+
+```
+(T1) Change all white marbles to black
+(T2) Change all black marbles to white
+```
+
+### Serializability Guarantee (2PL, OCC)
+Below are all the possibilities of schedules.
+
+```
+T1 -> T2: bag is ALL white
+T2 -> T1: bag is ALL black
+```
+
+### Snapshot Isolation (MVCC)
+Below are all the possibilities of schedules.
+
+```
+T1 -> T2: bag is ALL white
+T2 -> T1: bag is ALL black
+T1 || T2: 
+	(1) T1 sets x = white marbles (S: 1/2 white, 1/2 black)
+	(2) T2 sets y = black marbles (S: 1/2 white, 1/2 black)
+	(3) T1 sets x to black (S: all black)
+	(4) T2 sets y to white (S: 1/2 white, 1/2 black)
+```
