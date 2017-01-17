@@ -3,8 +3,6 @@ Bitcoin is an electronic currency that is "created" every ~10 minutes, and owned
 
 Bitcoin tries to solve the problem of equivocation, or "double-spending" of money. The general approach is to make a transaction log that is public (transactions are signed by public keys), append-only and strongly consistent (using hash chains and consensus on the order of operations).
 
-**Preread:** Cryptography
-
 ## Blockchain
 An append-only hash chain, which creates tamper-evident log of transactions.
 
@@ -31,7 +29,7 @@ Miners are incentivized to accept the longest chain because only blocks that are
 A transaction is typically considered stable on the hash chain when it is 6 blocks deep (around 1 hour).
 
 ## Storage and Verification
-Not clear in the slides.
+TODO.
 
 ### Issues
 Log of transactions grows very large. Since the log grows linearly, joining the race requires full download and verification of the log. 

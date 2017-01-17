@@ -59,23 +59,11 @@ cops
 
 dynamo
 
-sporc (fork* definition, OT definition)
-
-transactions: 2PL Permits Interleaved Access
-
-transactions: 2PL Doesn't Exploit Full Concurrency
-
-transactions: Undisciplined Locking causes Non-serializable Schedules
-
 transactions: ARIES Data Structures
 
 transactions: ARIES Crash Recovery Trace
 
-transactions: Black/White Marble Example
-
-crypto
-
-bitcoin (inc. blockchain)
+blockchain
 
 graph processing
 
@@ -86,3 +74,5 @@ roofnet
 cluster scheduling
 
 stream scheduling
+
+bitcoin: storage and verification
