@@ -158,7 +158,7 @@ Read A = 1
 								ACQ S-Lock on B
 								Read B = 1
 								Release Locks
-								Commit (2)
+								Commit (Sum = 2)
 ACQ X-Lock on A
 Write A = 2
 ACQ S-Lock on B
@@ -181,12 +181,13 @@ ACQ S-Lock on B
 Read B = 1
 ACQ X-Lock on B
 Write B = 2
-Release Locks																	ACQ S-Lock on A
+Release Locks	
+								ACQ S-Lock on A
 								Read A = 2
 								ACQ S-Lock on B
 								Read B = 2
 								Release Locks
-								Commit (4)
+								Commit (Sum = 4)
 Commit
 ```
 
@@ -209,21 +210,20 @@ Release Locks
 Commit
 								(ACQ S-Lock on A)
 								Read B = 2
-								Commit (4)
+								Commit (Sum = 4)
 ```
 
 ## Undisciplined Locking causes Non-serializable Schedules
 
-(1) T1 locks all pages containing volleyball players that
-play setter, and finds tallest setter (height = 6').
+(1) `T1` locks all records containing volleyball players that play setter, and finds tallest setter (height = 6').
 	
-(2) T2 inserts a new player that is a setter, (height = 6' 1")
+(2) `T2` inserts a new player that is a setter, (height = 6' 1")
 
-(3) T2 also deletes tallest outside hitter (with height 6' 5"), and commits.
+(3) `T2` also deletes tallest outside hitter (with height 6' 5"), and commits.
 
-(4) T1 now locks all pages containing volleyball players that play outside hitter and finds tallest (with height 6' 4").
+(4) `T1` now locks all records containing volleyball players that play outside hitter and finds tallest (with height 6' 4").
 
-T1 finds the tallest setter is 6', and the tallest outside is 6' 4". However, there is no serial execution where T1’s result could happen!
+`T1` finds the tallest setter is 6', and the tallest outside is 6' 4". However, there is no serial execution where `T1`’s result could happen!
 
 ### Valid Serializable Results
 
@@ -262,11 +262,24 @@ T2 -> T1: bag is ALL black
 Below are all the possibilities of schedules.
 
 ```
-T1 -> T2: bag is ALL white
-T2 -> T1: bag is ALL black
+T1 -> T2:
+	(1) Suppose initially at snapshot 0, x = white marbles and y = black marbles  
+	(2) T1 reads snapshot 0, and will be changing x to black
+	(3) T1 writes snapshot 1, all marbles are black
+	(4) T2 reads snapshot 1, and will be changing all marbles to white
+	(5) T2 writes snapshot 2, all marbles are white  
+
+T2 -> T1:
+	(1) Suppose initially at snapshot 0, x = white marbles and y = black marbles  
+	(2) T2 reads snapshot 0, and will be changing  y to white
+	(3) T2 writes snapshot 1, all marbles are white  
+	(2) T1 reads snapshot 1, and will be changing all marbles to black
+	(3) T1 writes snapshot 2, all marbles are black
+	
 T1 || T2: 
-	(1) T1 sets x = white marbles (S: 1/2 white, 1/2 black)
-	(2) T2 sets y = black marbles (S: 1/2 white, 1/2 black)
-	(3) T1 sets x to black (S: all black)
-	(4) T2 sets y to white (S: 1/2 white, 1/2 black)
+	(1) Initially at snapshot 0, x = white marbles and y = black marbles  
+	(2) T1 reads snapshot 0, and will be changing x to black
+	(3) T2 reads snapshot 0, and will be changing y to white
+	(4) T1 writes snapshot 1, all marbles are black  
+	(5) T2 writes snapshot 2, now x is black and y is white
 ```
