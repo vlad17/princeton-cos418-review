@@ -8,6 +8,8 @@ The general approach to conflict resolution is to encode operations as increment
 A key observation: this only works because operations are **commutative** and **invertible**! It *does not* work otherwise.
 
 ## Operational Transform
+Operational transformation (OT) defines a framework for executing lock-free concurrent operations that both preserves causal consistency and converges to a common shared state. It does so by transforming operations so they can be applied commutatively by different clients, resulting in the same final state.
+
 General idea is to take advantage of commutative property of operation. Say that we have two servers, `A` and `B`, both in state `X` with two respective operations `a` and `b`. Even if both servers apply their own operations first, we should still end at the same final state. 
 
  
