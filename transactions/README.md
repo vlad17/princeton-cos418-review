@@ -210,6 +210,7 @@ Release Locks
 Commit
 								(ACQ S-Lock on A)
 								Read B = 2
+								Rease Locks
 								Commit (Sum = 4)
 ```
 
