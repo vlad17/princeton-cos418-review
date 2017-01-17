@@ -59,9 +59,7 @@ cops
 
 dynamo
 
-spanner
-
-sporc
+sporc (fork* definition, OT definition)
 
 transactions: 2PL Permits Interleaved Access
 
@@ -74,6 +72,8 @@ transactions: ARIES Data Structures
 transactions: ARIES Crash Recovery Trace
 
 transactions: Black/White Marble Example
+
+spanner
 
 blockchain
 
