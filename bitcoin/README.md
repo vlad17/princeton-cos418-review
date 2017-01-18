@@ -29,7 +29,8 @@ Miners are incentivized to accept the longest chain because only blocks that are
 A transaction is typically considered stable on the hash chain when it is 6 blocks deep (around 1 hour).
 
 ## Storage and Verification
-TODO.
+
+Use **merkel trees** (transactions are leaves) so that each block header (block has multiple transactions) is fixed width. Pruning blocks' merkel trees to only header + few levels deep makes verification (against a trusted log) easier, too.
 
 ### Issues
 Log of transactions grows very large. Since the log grows linearly, joining the race requires full download and verification of the log. 
