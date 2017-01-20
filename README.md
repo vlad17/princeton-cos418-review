@@ -61,10 +61,6 @@ transactions: ARIES Crash Recovery Trace
 
 cops
 
-graph processing
-
-CDN
-
 roofnet
 
 cluster scheduling
