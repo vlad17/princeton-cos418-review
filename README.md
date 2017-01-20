@@ -63,7 +63,3 @@ cops
 
 roofnet
 
-cluster scheduling
-
-stream scheduling
-
