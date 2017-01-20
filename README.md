@@ -47,15 +47,11 @@ spark
 
 rpc
 
-2pc
-
 raft
 
 chord
 
 paxos failure examples
-
-cops
 
 dynamo
 
@@ -63,16 +59,7 @@ transactions: ARIES Data Structures
 
 transactions: ARIES Crash Recovery Trace
 
-blockchain
-
-graph processing
-
-CDN
+cops
 
 roofnet
 
-cluster scheduling
-
-stream scheduling
-
-bitcoin: storage and verification
