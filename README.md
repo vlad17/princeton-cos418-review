@@ -41,8 +41,6 @@ The various nuances described here are only to help understanding of the topic.
 
 ## What's not done yet:
 
-spark
-
 paxos failure examples
 
 dynamo
