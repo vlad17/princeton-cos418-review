@@ -43,8 +43,6 @@ The various nuances described here are only to help understanding of the topic.
 
 spark
 
-rpc
-
 chord
 
 paxos failure examples
