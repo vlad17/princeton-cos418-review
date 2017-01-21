@@ -43,11 +43,6 @@ The various nuances described here are only to help understanding of the topic.
 
 spark
 
-chord
-
 paxos failure examples
 
 dynamo
-
-roofnet
-
