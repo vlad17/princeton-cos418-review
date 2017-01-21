@@ -39,21 +39,23 @@ A view server knows whether a backup is up to date by sending a **view-change** 
 A *new* backup (in view `i` but not in view `i-1`) gets the current state through the primary. This occurs through state transfer via snapshot. If an operation occurred before the transfer, the transfer must reflect the operation. If the operation occurred after the transfer, the primary forwards the operation to the backup after the state transfer finishes.
 
 ## Examples
+### Split Brain
 **Split brain** can occur, where the view of who is primary and backup differs among servers.
 
 ![primary-backup](/primary-backup/split_brain.png)
 
-
+### Stale Server View
 In this example, the client has the updated view and tries to contact the primary, who doesn't have the updated view. `S2` can infer from the client that it has a stale view, and updates its own view.
 ![primary-backup](/primary-backup/ex1_1.png)  
 ![primary-backup](/primary-backup/ex1_2.png)  
 
+### Stale Client and Primary View
+In this example, the client has the old view and tries to contact the *old* primary, who also has the old view. When the primary forwards the command to `S2`, `S2` rejects the request. The client's request can be rejected and the client can infer that it has a stale view, and updates its own view.
 
-In this example, the client has the old view and tries to contact the primary, who also has the old view. When the primary forwards the command to `S2`, `S2` rejects the request. The client's request can be rejected and the client can infer that it has a stale view, and updates its own view.
-TODO: Why doesn't the primary update its own view?  
 ![primary-backup](/primary-backup/ex2_1.png)  
 ![primary-backup](/primary-backup/ex2_2.png)  
 
+### Stale View in System
 In this example, the client and both servers have a stale view. The client's request still proceeds as normal.  
 ![primary-backup](/primary-backup/ex3.png)  
 

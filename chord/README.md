@@ -1,7 +1,7 @@
 # Summary
 
 Chord is a scalable peer-to-peer distributed lookup service. It provides support for just one operation: given a key, it maps the key onto a node. Data location can be easily implemented on top of Chord by associating a key with each data
-item, and storing the key/data item pair at the node to which the key maps. It is efficient (`O(log N)` messages per lookup) and scalable (`O(log N)` state per node), where N is the total number of servers. It is also robust, surviving massive failures.
+item, and storing the key/data item pair at the node to which the key maps. It is efficient (`O(log N)` messages per lookup) and scalable (`O(log N)` state per node), where N is the total number of servers. The total expected routing time is `O(log N)`. It is also robust, surviving massive failures.
 
 ## Peer-to-Peer (P2P)
 ### Properties
@@ -50,20 +50,30 @@ Each node also has pointers to its successor, the node with the next-higher ID.
 Keep a table of pointers to successors. Finger `i` at node `n` points to the successor of node `n + 2^i`. This is essentially a binary lookup tree rooted at every node. **Every** node has its own finger table and acts as a root, so there's no root hotspot and no single point of failure.
 
 ### Node Join
-The following examples are for adding `N36`, where the initial state is `N25 -> N40`. `N40` has keys `K30` and `K38`.
+The following examples are for adding `N36`, where the initial state is `N25 -> N40`. `N40` has keys `K26`, `K30` and `K38`.
 
-1. Lookup(36) and get `N40`.
+1. `Lookup(36)` and get `N40`.
 2. `N36` sets its own successor pointer to `N40`.
 3. Copy keys `K26` to `K36` from `N40` to `N36`.
 4. Notify Messages: `N40` notifies `N25` that it's predecessor is `N36` 
-5. Finger pointers updatd in the background
+5. Finger pointers updated in the background
 
 ### Successor Lists
-Each node stores a list of its `r` immediate successor, so after failure, the first live succesor is known.
+Each node stores a list of its `r` immediate successors, so after failure, the first live succesor is known.
 
 ### Chord Lookup
 ```
-Lookup(key-id)	look in local finger table and successor-list			  for highest n: my-id < n < key-id	if n exists		  call Lookup(key-id) on node n	 // next hop		  if call failed,			  remove n from finger table and/or 					successor list			  return Lookup(key-id)	else      return my successor	 // done```
+Lookup(key-id)
+	look in local finger table and successor-list
+		for highest n: my-id < n < key-id
+	if n exists
+		call Lookup(key-id) on node n	 // next hop
+		if call failed,
+			remove n from finger table and/or successor list
+			return Lookup(key-id)
+	else 
+		return my successor	 // done
+```
 
 ## Application: DHash DHT
 * Chord used to build key/value storage.
@@ -76,3 +86,7 @@ Lookup(key-id)	look in local finger table and successor-list			  for highest n
 * Quick lookup in large systems
 * Low variation in lookup costs
 * Robust despite massive failure
+* With `N^2` virtual nodes, a node failure only increases the load on each node by `1/N` on expectation
+
+
+

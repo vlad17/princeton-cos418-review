@@ -236,26 +236,33 @@ Commit
 ```
 
 ## ARIES Data Structures
+
+* **Page** stores data, like multiple key/value pairs. It is associated with a page log sequence number, which uniquely identifies the log record for the latest update applied to this page.
+
 ### Stable Storage
 * A **log** composed of records, which contain a log sequence number (monotonically increasing), as well as a pointer to the previous log record for the same transaction.  
-* **Page**, with a page log sequence number, which uniquely identifies the log record for the latest update applied to this page.
 
 ### In-Memory
 * Transaction table (**T-table**) tracks transactions and their status (running, committed, aborted), as well as the most recent log record written by the transaction.  
-* Dirty page table: a page identifer table for dirty pages. It uses a recovery log sequence number, which tracks the earliest change to that page that is *not on disk*
+* Dirty page table: a page identifer table for pages with data that have not been f-synced yet. It uses a recovery log sequence number, which tracks the earliest change to that page that is *not on disk*
 
 ## ARIES Crash Recovery Trace
 ### Phase 1 (Analysis)
-1. Start at **checkpointed** entries in the T-table and dirty page table.
+![serial schedule image](/transactions/aries_1.png)
+
+1. Initialize from persisted tables corresponding to log **checkpoint**.
 2. Read the log forward form the checkpoint, and update tables.
-3. Figure out which transactions committed since the checkpoing, and which failed.
+3. Figure out which transactions committed since the checkpoint, and which failed.
 
 ### Phase 2 (Redo)
-1. Start at the first log sequence number and scan log entries forward in time. Reapply **all actions** and update the page log sequence numbers.
-2. State now matches state as recorded by log.
+![serial schedule image](/transactions/aries_2.png)
+
+Start at the first log sequence number and scan log entries forward in time. Reapply **all actions** and update the page log sequence numbers. The state now exactly matches the state as recorded by log.
 
 ### Phase 3 (Undo)
-1. Scan log entries backwards from the end and undo all transactions that have failed. 
+![serial schedule image](/transactions/aries_3.png)
+
+Scan log entries backwards from the end and undo all transactions that have failed. 
 
 ## Black/White Marble Example
 Let's say we have a bag of marbles, half of which are white, and half of which are black.

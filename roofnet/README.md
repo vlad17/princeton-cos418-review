@@ -8,20 +8,18 @@ Roofnet is a wireless mesh architecture that provides high performance Internet 
 4. High TCP throughout 
 
 ## Node Addresses
-Wireless interface IP addresses are auto configured, using a private prefix (e.g. 10) for the high byte, and the lower 24 bits of ethernet addresses for the lower three bytes.
-
-A roofnet node uses NAT between wired ethernet and Roofnet, so that connections from a user's host appear to the rest of Roofnet to have originated from the user's node. This means that no address allocation coordination across Roofnet boxes is required.
+* Wireless interface IP address based on hardware ethernet address for lower bytes -> no configuration needed
+* Every roofnet node has a NAT for its users -> no address allocation necessary across nodes
 
 ## Internet Gateways
-Roofnet assumes that a small fraction of Roofnet users will voluntarily share their wired Internet acces links.
+Roofnet assumes that a small fraction of Roofnet users will voluntarily share their wired Internet access links.
 
 A roofnet node sends a DHCP request on ethernet to test if it is an internet gateway. If this succeeds, the node advertises itself as a gateway. Other nodes will use this to send traffic to the internet.
 
 Roofnet nodes open a TCP connection to the route with the best metric, and track the gateway used for each open TCP connection they originate.
 
 ## Hop Count
-Practical studies found that minimum-hop-count routes are significantly throughput-suboptimal, so we must choose paths with care. This is hard to predict because link loss is often asymmetric, and there is a wide range of loss rates.
-
+Practical studies found that minimum-hop-count routes are significantly throughput-suboptimal: link loss can be high-variance and asymmetric.
 
 ## Routing Protocol (Srcr)
 Roofnet's routing protocol, Srcr, tries to find the highest-throughput route between any pair of Roofnet nodes.
@@ -43,7 +41,7 @@ These delivery ratios are measured when nodes periodically send broadcast **prob
 Nodes enclose these loss measurements in their transmitted probes. For instance `B` tells node `A` the link delivery rate from `A` to `B`.
 
 ## Multi-Bitrate Metric
-Can't compare two transmissions at different bitrates (802.11b supports 1, 2, 5.5, and 11 Mbit/s). RoofNet uses ETT to predict which links offer the best throughput.
+Can't compare two transmissions at different bitrates (802.11b supports 1, 2, 5.5, and 11 Mbit/s). Higher bit-rates allow high quality links to transmit more data, but provide low throughput on lossy links. Lower bit-rates, in general, have a lower loss probability on low quality links. RoofNet uses ETT to predict which links offer the best throughput.
 
 **Expected Transmission Time (ETT)**: expected time spent on a packet, calculated when nodes send 1500-byte broadcast probes at every bit rate `b` to compute forward link delivery rates `df(b)`. 
 

@@ -20,7 +20,7 @@ _Image source_: In Search of an Understandable Consensus Algorithm (Extended Ver
 
 ## Follower Behavior
 * On receiving heartbeat, reset the election timer
-* On receiving nonempty append entries from leader, update log entries
+* On receiving nonempty append entries from leader, update log entries and reset timer
 * If an **electionTimeout** (150-300ms) passes with no heartbeat, the follower assumes the leader has crashed, converts to candidate, and starts a new election
 * Reject any RPC that was sent by a stale leader
 

@@ -30,8 +30,9 @@ This is the simplest scheme for handling failures.
 
 But, this method can still have bad side effects, like duplication. This method is *only* acceptable if there are:
 
-* Read-only operations with no side effects  
-* If the application has its own functionality to cope with duplication and reordering
+* Read-only operations with no side effects
+* Idempotent and commutative functions 
+* If the application has its own functionality to cope with duplication and reordering of RPCs
 
 
 ### At-Most-Once Scheme
@@ -46,12 +47,8 @@ Add a pending flag per executing RPC, so that the server waits for procedure to 
 #### Server Crash
 Need to write *old* and *seen* tables to disk, otherwise the server can accept duplicate requests.
 
-## Networking (Basics)
-* Layers provide a set of abstractions for applications and media
-* Each layer provides a guarantee for the layer above  
-* Protocols establish rules for each layer
-
-**Transport**: Provide end-to-end communication between processes on different hosts  
-**Network**: Deliver packets to destinations on other networks  
-**Link**: Enables end hosts to exchange atomic messages with each other  
-**Physical**: Moves bits between two hosts connected by a physical link
+### Exactly-Once Scheme
+* Need retransmission of at least once scheme
+* Needs the duplicate filtering of the at-most-once scheme
+* Needs to survive crashes by logging completed RPCs to disk
+* Similar to 2PC
