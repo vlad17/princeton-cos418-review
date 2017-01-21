@@ -264,6 +264,8 @@ Start at the first log sequence number and scan log entries forward in time. Rea
 
 Scan log entries backwards from the end and undo all transactions that have failed. 
 
+Log every change, even undo operations during crash recovery. This helps for repeat crashes.
+
 ## Black/White Marble Example
 Let's say we have a bag of marbles, half of which are white, and half of which are black.
 
