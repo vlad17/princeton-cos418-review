@@ -7,7 +7,7 @@ Since consistency is handled by the application, we need to worry about failures
 
 ### Failure Control
 
-**Force Policy**: force all of a transaction's writes to disk before commit [note this refers to the transaction's changes themselves; the transaction itself may still be forced to disk before commit for durability guarantees] 
+**Force Policy**: force all of a transaction's writes to disk before commit [note this refers to the transaction's changes themselves; the transaction itself may still be forced to disk before commit for durability guarantees]  
 **Steal Policy**: allow uncommitted writes of transactions to overwrite committed values on disk 
 
 Force policy: `fsync` on every transaction's critical path, slow. No-force: might have to re-do transactions that are commited but not yet forced.
@@ -60,6 +60,8 @@ Once a transaction has **released** a lock it is **not allowed to obtain** any o
 ## Crash Recovery
 
 Introduced in **ARIES**: the gold standard in IBM DB2 and Microsoft's SQL Servers. It essentially refined write-ahead logging, repeated history after a crash (via redo), and logged **every** change (even undos during crash recovery).
+
+On a restart, *first* repeat history without backtracking (even transactions that were in flight or aborted at time of crash), *then* undo those transactions.
 
 `redo + undo + WAL + checkpointing + crash handling = ACID`
 
@@ -235,11 +237,34 @@ Commit
 
 ## ARIES Data Structures
 
-TODO: Summarize L15 slides 43-46
+* **Page** stores data, like multiple key/value pairs. It is associated with a page log sequence number, which uniquely identifies the log record for the latest update applied to this page.
+
+### Stable Storage
+* A **log** composed of records, which contain a log sequence number (monotonically increasing), as well as a pointer to the previous log record for the same transaction.  
+
+### In-Memory
+* Transaction table (**T-table**) tracks transactions and their status (running, committed, aborted), as well as the most recent log record written by the transaction.  
+* Dirty page table: a page identifer table for pages with data that have not been f-synced yet. It uses a recovery log sequence number, which tracks the earliest change to that page that is *not on disk*
 
 ## ARIES Crash Recovery Trace
+### Phase 1 (Analysis)
+![serial schedule image](/transactions/aries_1.png)
 
-TODO: Summarize (preferably with ASCII art) L15 slides 47-50
+1. Initialize from persisted tables corresponding to log **checkpoint**.
+2. Read the log forward form the checkpoint, and update tables.
+3. Figure out which transactions committed since the checkpoint, and which failed.
+
+### Phase 2 (Redo)
+![serial schedule image](/transactions/aries_2.png)
+
+Start at the first log sequence number and scan log entries forward in time. Reapply **all actions** and update the page log sequence numbers. The state now exactly matches the state as recorded by log.
+
+### Phase 3 (Undo)
+![serial schedule image](/transactions/aries_3.png)
+
+Scan log entries backwards from the end and undo all transactions that have failed. 
+
+Log every change, even undo operations during crash recovery. This helps for repeat crashes.
 
 ## Black/White Marble Example
 Let's say we have a bag of marbles, half of which are white, and half of which are black.
