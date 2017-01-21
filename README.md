@@ -41,25 +41,15 @@ The various nuances described here are only to help understanding of the topic.
 
 ## What's not done yet:
 
-primary-backup
-
 spark
 
 rpc
-
-raft
 
 chord
 
 paxos failure examples
 
 dynamo
-
-transactions: ARIES Data Structures
-
-transactions: ARIES Crash Recovery Trace
-
-cops
 
 roofnet
 
