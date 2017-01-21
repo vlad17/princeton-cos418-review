@@ -86,7 +86,7 @@ Lookup(key-id)
 * Quick lookup in large systems
 * Low variation in lookup costs
 * Robust despite massive failure
-* With `N^2` virtual nodes, a node failure only increases the load on each node by `1/N` on expectation
+* With `N^2` virtual nodes, a node failure only increases the load on each node by `1/N` in expectation, compared to the case of `N` virtual nodes (where if a node fails, all its keys goes to its successor)
 
 
 
