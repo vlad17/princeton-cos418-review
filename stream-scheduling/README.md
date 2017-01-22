@@ -2,7 +2,7 @@
 
 Stream operations throught data flow construction. Stateless operations can be trivially parallelized. Stateful aggregation (by key), can be parallelized through **hash-joins**.
 
-Data flow can be **tuple-by-tuple** or **micro-batch**. Latter is higher throughput, lower latency.
+Data flow can be **tuple-by-tuple** or **micro-batch**. Latter is higher throughput, higher latency.
 
 Semantics offered differently by differnet frameworks.
 
