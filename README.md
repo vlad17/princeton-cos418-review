@@ -44,5 +44,3 @@ The various nuances described here are only to help understanding of the topic.
 spark
 
 paxos failure examples
-
-dynamo
