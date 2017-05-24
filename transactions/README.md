@@ -59,7 +59,7 @@ Once a transaction has **released** a lock it is **not allowed to obtain** any o
 
 ## Crash Recovery
 
-Introduced in **ARIES**: the gold standard in IBM DB2 and Microsoft's SQL Servers. It essentially refined write-ahead logging, repeated history after a crash (via redo), and logged **every** change (even undos during crash recovery).
+Introduced in **ARIES**: the gold standard in IBM DB2 and Microsoft's SQL Servers. It essentially refined write-ahead logging, repeated history after a crash (via redo), and logged **every** change (even undos during crash recovery). [Neat ARIES visualizer](https://mwhittaker.github.io/aries/).
 
 On a restart, *first* repeat history without backtracking (even transactions that were in flight or aborted at time of crash), *then* undo those transactions.
 
